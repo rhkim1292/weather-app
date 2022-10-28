@@ -8,7 +8,10 @@ body {
     height: 100vh;
     background-color: bisque;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 form {
@@ -22,4 +25,24 @@ form {
 form input {
     width: 150px;
     text-align: center;
+}
+
+button#newLocationBtn {
+    position: absolute;
+    top: 10px;
+}
+
+div {
+    text-align: center;
+}
+
+div h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 10px 0px 10px 0px;
+}
+
+div h2,
+div h4 {
+    margin: 5px 0px 5px 0px;
 }
