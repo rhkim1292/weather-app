@@ -17,7 +17,6 @@ async function getWeather(location) {
 const processJSON = (promise) => {
   const processed = {};
   promise.then((response) => {
-    console.log(response);
     processed['location'] = response.name;
     processed['feels_like'] = response.main.feels_like;
     processed['temp'] = response.main.temp;
@@ -29,4 +28,25 @@ const processJSON = (promise) => {
   return processed;
 };
 
-console.log(processJSON(getWeather('Los Angeles')));
+const locationForm = document.createElement('form');
+locationForm.setAttribute('id', 'location-form');
+const inputLabel = document.createElement('label');
+inputLabel.setAttribute('for', 'locationInput');
+inputLabel.textContent = 'Give me the weather information for:'
+const locationInput = document.createElement('input');
+locationInput.setAttribute('id', 'locationInput');
+locationInput.setAttribute('name', 'location_name');
+locationInput.setAttribute('placeholder', 'City Name');
+const submitBtn = document.createElement('button');
+submitBtn.setAttribute('type', 'submit');
+submitBtn.textContent = 'GO';
+locationForm.append(inputLabel, locationInput, submitBtn);
+document.body.appendChild(locationForm);
+
+locationForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(locationForm);
+  const submittedLocationName = formData.get('location_name')
+  console.log(processJSON(getWeather(submittedLocationName)));
+  locationForm.reset();
+});
