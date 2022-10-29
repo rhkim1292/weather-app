@@ -57,16 +57,25 @@ newLocationBtn.addEventListener('click', (e) => {
   displayContainer.style.display = 'none';
   locationForm.style.display = 'flex';
   newLocationBtn.style.display = 'none';
+  responseTimeDisplay.style.display ='none';
 });
 
-document.body.append(locationForm, newLocationBtn, displayContainer);
+const responseTimeDisplay = document.createElement('p');
+responseTimeDisplay.setAttribute('id', 'responseTimeDisplay');
+responseTimeDisplay.style.display = 'none';
+
+document.body.append(locationForm, newLocationBtn, displayContainer, responseTimeDisplay);
 
 locationForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(locationForm);
   const submittedLocationName = formData.get('location_name');
+  const responseBeginTime = performance.now();
   processJSON(getWeather(submittedLocationName)).then((res) => {
-    console.log(res);
+    const responseEndTime = performance.now();
+    const responseTime = responseEndTime - responseBeginTime;
+    responseTimeDisplay.textContent = `API Response Time: ${responseTime.toFixed(2)} ms`;
+    responseTimeDisplay.style.display = 'block';
     locationForm.style.display = 'none';
     locationForm.reset();
     locationH2.textContent = res.location;
